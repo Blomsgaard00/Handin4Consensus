@@ -10,7 +10,7 @@ message Token {
 
 message Empty{}
 
-service ChittyChat {
+service Consensus {
     rpc HandoverToken(Token) returns (Empty);
     rpc RecieveToken(Empty) returns (Token);
 }

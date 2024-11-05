@@ -19,139 +19,139 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	ChittyChat_HandoverToken_FullMethodName = "/Consensus.ChittyChat/HandoverToken"
-	ChittyChat_RecieveToken_FullMethodName  = "/Consensus.ChittyChat/RecieveToken"
+	Consensus_HandoverToken_FullMethodName = "/Consensus.Consensus/HandoverToken"
+	Consensus_RecieveToken_FullMethodName  = "/Consensus.Consensus/RecieveToken"
 )
 
-// ChittyChatClient is the client API for ChittyChat service.
+// ConsensusClient is the client API for Consensus service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type ChittyChatClient interface {
+type ConsensusClient interface {
 	HandoverToken(ctx context.Context, in *Token, opts ...grpc.CallOption) (*Empty, error)
 	RecieveToken(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*Token, error)
 }
 
-type chittyChatClient struct {
+type consensusClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewChittyChatClient(cc grpc.ClientConnInterface) ChittyChatClient {
-	return &chittyChatClient{cc}
+func NewConsensusClient(cc grpc.ClientConnInterface) ConsensusClient {
+	return &consensusClient{cc}
 }
 
-func (c *chittyChatClient) HandoverToken(ctx context.Context, in *Token, opts ...grpc.CallOption) (*Empty, error) {
+func (c *consensusClient) HandoverToken(ctx context.Context, in *Token, opts ...grpc.CallOption) (*Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(Empty)
-	err := c.cc.Invoke(ctx, ChittyChat_HandoverToken_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, Consensus_HandoverToken_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *chittyChatClient) RecieveToken(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*Token, error) {
+func (c *consensusClient) RecieveToken(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*Token, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(Token)
-	err := c.cc.Invoke(ctx, ChittyChat_RecieveToken_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, Consensus_RecieveToken_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// ChittyChatServer is the server API for ChittyChat service.
-// All implementations must embed UnimplementedChittyChatServer
+// ConsensusServer is the server API for Consensus service.
+// All implementations must embed UnimplementedConsensusServer
 // for forward compatibility.
-type ChittyChatServer interface {
+type ConsensusServer interface {
 	HandoverToken(context.Context, *Token) (*Empty, error)
 	RecieveToken(context.Context, *Empty) (*Token, error)
-	mustEmbedUnimplementedChittyChatServer()
+	mustEmbedUnimplementedConsensusServer()
 }
 
-// UnimplementedChittyChatServer must be embedded to have
+// UnimplementedConsensusServer must be embedded to have
 // forward compatible implementations.
 //
 // NOTE: this should be embedded by value instead of pointer to avoid a nil
 // pointer dereference when methods are called.
-type UnimplementedChittyChatServer struct{}
+type UnimplementedConsensusServer struct{}
 
-func (UnimplementedChittyChatServer) HandoverToken(context.Context, *Token) (*Empty, error) {
+func (UnimplementedConsensusServer) HandoverToken(context.Context, *Token) (*Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method HandoverToken not implemented")
 }
-func (UnimplementedChittyChatServer) RecieveToken(context.Context, *Empty) (*Token, error) {
+func (UnimplementedConsensusServer) RecieveToken(context.Context, *Empty) (*Token, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RecieveToken not implemented")
 }
-func (UnimplementedChittyChatServer) mustEmbedUnimplementedChittyChatServer() {}
-func (UnimplementedChittyChatServer) testEmbeddedByValue()                    {}
+func (UnimplementedConsensusServer) mustEmbedUnimplementedConsensusServer() {}
+func (UnimplementedConsensusServer) testEmbeddedByValue()                   {}
 
-// UnsafeChittyChatServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to ChittyChatServer will
+// UnsafeConsensusServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to ConsensusServer will
 // result in compilation errors.
-type UnsafeChittyChatServer interface {
-	mustEmbedUnimplementedChittyChatServer()
+type UnsafeConsensusServer interface {
+	mustEmbedUnimplementedConsensusServer()
 }
 
-func RegisterChittyChatServer(s grpc.ServiceRegistrar, srv ChittyChatServer) {
-	// If the following call pancis, it indicates UnimplementedChittyChatServer was
+func RegisterConsensusServer(s grpc.ServiceRegistrar, srv ConsensusServer) {
+	// If the following call pancis, it indicates UnimplementedConsensusServer was
 	// embedded by pointer and is nil.  This will cause panics if an
 	// unimplemented method is ever invoked, so we test this at initialization
 	// time to prevent it from happening at runtime later due to I/O.
 	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
 		t.testEmbeddedByValue()
 	}
-	s.RegisterService(&ChittyChat_ServiceDesc, srv)
+	s.RegisterService(&Consensus_ServiceDesc, srv)
 }
 
-func _ChittyChat_HandoverToken_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Consensus_HandoverToken_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(Token)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ChittyChatServer).HandoverToken(ctx, in)
+		return srv.(ConsensusServer).HandoverToken(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: ChittyChat_HandoverToken_FullMethodName,
+		FullMethod: Consensus_HandoverToken_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ChittyChatServer).HandoverToken(ctx, req.(*Token))
+		return srv.(ConsensusServer).HandoverToken(ctx, req.(*Token))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ChittyChat_RecieveToken_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Consensus_RecieveToken_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(Empty)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ChittyChatServer).RecieveToken(ctx, in)
+		return srv.(ConsensusServer).RecieveToken(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: ChittyChat_RecieveToken_FullMethodName,
+		FullMethod: Consensus_RecieveToken_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ChittyChatServer).RecieveToken(ctx, req.(*Empty))
+		return srv.(ConsensusServer).RecieveToken(ctx, req.(*Empty))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// ChittyChat_ServiceDesc is the grpc.ServiceDesc for ChittyChat service.
+// Consensus_ServiceDesc is the grpc.ServiceDesc for Consensus service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var ChittyChat_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "Consensus.ChittyChat",
-	HandlerType: (*ChittyChatServer)(nil),
+var Consensus_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "Consensus.Consensus",
+	HandlerType: (*ConsensusServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "HandoverToken",
-			Handler:    _ChittyChat_HandoverToken_Handler,
+			Handler:    _Consensus_HandoverToken_Handler,
 		},
 		{
 			MethodName: "RecieveToken",
-			Handler:    _ChittyChat_RecieveToken_Handler,
+			Handler:    _Consensus_RecieveToken_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
