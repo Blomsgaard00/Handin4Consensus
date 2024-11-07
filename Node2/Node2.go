@@ -55,7 +55,7 @@ func main() {
 	}
 
 	for true {
-		time.Sleep(1000)
+		time.Sleep(100 * time.Millisecond)
 		if hasToken {
 			fmt.Println("node 2 has token")
 		
