@@ -20,7 +20,6 @@ const _ = grpc.SupportPackageIsVersion9
 
 const (
 	Consensus_HandoverToken_FullMethodName = "/Consensus.Consensus/HandoverToken"
-	Consensus_RecieveToken_FullMethodName  = "/Consensus.Consensus/RecieveToken"
 )
 
 // ConsensusClient is the client API for Consensus service.
@@ -28,7 +27,6 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ConsensusClient interface {
 	HandoverToken(ctx context.Context, in *Token, opts ...grpc.CallOption) (*Empty, error)
-	RecieveToken(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*Token, error)
 }
 
 type consensusClient struct {
@@ -49,22 +47,11 @@ func (c *consensusClient) HandoverToken(ctx context.Context, in *Token, opts ...
 	return out, nil
 }
 
-func (c *consensusClient) RecieveToken(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*Token, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(Token)
-	err := c.cc.Invoke(ctx, Consensus_RecieveToken_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 // ConsensusServer is the server API for Consensus service.
 // All implementations must embed UnimplementedConsensusServer
 // for forward compatibility.
 type ConsensusServer interface {
 	HandoverToken(context.Context, *Token) (*Empty, error)
-	RecieveToken(context.Context, *Empty) (*Token, error)
 	mustEmbedUnimplementedConsensusServer()
 }
 
@@ -77,9 +64,6 @@ type UnimplementedConsensusServer struct{}
 
 func (UnimplementedConsensusServer) HandoverToken(context.Context, *Token) (*Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method HandoverToken not implemented")
-}
-func (UnimplementedConsensusServer) RecieveToken(context.Context, *Empty) (*Token, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method RecieveToken not implemented")
 }
 func (UnimplementedConsensusServer) mustEmbedUnimplementedConsensusServer() {}
 func (UnimplementedConsensusServer) testEmbeddedByValue()                   {}
@@ -120,24 +104,6 @@ func _Consensus_HandoverToken_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Consensus_RecieveToken_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Empty)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ConsensusServer).RecieveToken(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Consensus_RecieveToken_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ConsensusServer).RecieveToken(ctx, req.(*Empty))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 // Consensus_ServiceDesc is the grpc.ServiceDesc for Consensus service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -148,10 +114,6 @@ var Consensus_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "HandoverToken",
 			Handler:    _Consensus_HandoverToken_Handler,
-		},
-		{
-			MethodName: "RecieveToken",
-			Handler:    _Consensus_RecieveToken_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

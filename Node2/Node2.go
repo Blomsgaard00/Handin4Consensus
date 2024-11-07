@@ -18,10 +18,29 @@ type Server struct {
 	proto.Token
 }
 
-func main() {
-	conn, err := grpc.NewClient("localhost:5101", grpc.WithTransportCredentials(insecure.NewCredentials()))
+func (s *Server) start_server() {
+	grpcServer := grpc.NewServer()
+	listener, err := net.Listen("tcp", ":5051")
+	if err != nil {
+		log.Fatalf("Did not work")
+	}
 
+	proto.RegisterConsensusServer(grpcServer, s)
+
+	err = grpcServer.Serve(listener)
+
+	if err != nil {
+		log.Fatalf("Did not work")
+	}
 }
+
+func main() {
+	server := Server{}
+	server.start_server()
+	
+}
+
+
 
 func (s *Server )HandoverToken(ctx context.Context, token *proto.Token) (*proto.Empty, error){
 

@@ -12,5 +12,4 @@ message Empty{}
 
 service Consensus {
     rpc HandoverToken(Token) returns (Empty);
-    rpc RecieveToken(Empty) returns (Token);
 }
