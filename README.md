@@ -8,4 +8,4 @@
 6. Go to the third terminal and navigate to /Node1 folder
 7. Write the command "go run Node1.go"
 8. The program now runs and the different nodes acces the critical section
-at different times illustrated by printstaments in the terminals
+at different times illustrated by print statements in the terminals
