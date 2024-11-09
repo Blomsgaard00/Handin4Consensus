@@ -3,10 +3,13 @@ package main
 import (
 	proto "Handin4Consensus/gRPC"
 	"context"
+	"crypto/rand"
 	"fmt"
 	"log"
 	"net"
 	"time"
+	"math/rand"
+
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 )
@@ -53,21 +56,22 @@ func main() {
 	client1token := &proto.Token{
 		Token: false,
 	}
-
+	
 	for true {
 		time.Sleep(100 * time.Millisecond)
 		if hasToken {
 			fmt.Println("node 1 has token")
+			fmt.Println("node 1 sees if it want to access")
 			client.HandoverToken(context.Background(), client1token)
 			hasToken = false
 		} else {
-			//fmt.Println("node 1 does not have token")
+
+			fmt.Println("node 1 does not have token")
 			//waiting for token
 		}
-
-		//recieving token
-		//entering critical section
-		//leaving critcial section
-
 	}
+}
+
+func Seed(i int) {
+	panic("unimplemented")
 }
