@@ -49,9 +49,7 @@ func main() {
 	//breakpoint wait for terminal
 	client := proto.NewConsensusClient(conn)
 
-	client1token := &proto.Token{
-		Token: false,
-	}
+	client1token := &proto.Token{}
 	number := 1
 	for true {
 		time.Sleep(100 * time.Millisecond)

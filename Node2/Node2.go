@@ -49,9 +49,8 @@ func main() {
 	//breakpoint wait for terminal
 	client := proto.NewConsensusClient(conn)
 
-	client1token := &proto.Token{
-		Token: false,
-	}
+	client2token := &proto.Token{}
+	
 
 	number := 1
 	for true {
@@ -64,7 +63,7 @@ func main() {
 				log.Println("node 2 leaves cs")
 			}
 
-			client.HandoverToken(context.Background(), client1token)
+			client.HandoverToken(context.Background(), client2token)
 			hasToken = false
 		} else {
 

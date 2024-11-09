@@ -5,7 +5,6 @@ option go_package = "Handin4Consensus/gRPC";
 
 
 message Token {
-    bool token = 1;
 }
 
 message Empty{}

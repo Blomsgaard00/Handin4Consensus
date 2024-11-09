@@ -50,9 +50,8 @@ func main() {
 	//breakpoint wait for terminal
 	client := proto.NewConsensusClient(conn)
 
-	client1token := &proto.Token{
-		Token: false,
-	}
+	client3token := &proto.Token{}
+
 	number := 1
 	for true {
 		time.Sleep(100 * time.Millisecond)
@@ -64,7 +63,7 @@ func main() {
 			log.Println("node 3 leaves cs")
 			}
 
-			client.HandoverToken(context.Background(), client1token)
+			client.HandoverToken(context.Background(), client3token)
 			hasToken = false
 		} else {
 
