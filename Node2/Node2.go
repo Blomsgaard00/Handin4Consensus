@@ -3,14 +3,13 @@ package main
 import (
 	proto "Handin4Consensus/gRPC"
 	"context"
-	"fmt"
 	"log"
 	"net"
 	"time"
+
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 )
-
 
 type Server struct {
 	proto.UnimplementedConsensusServer
@@ -54,21 +53,24 @@ func main() {
 		Token: false,
 	}
 
+	number := 1
 	for true {
 		time.Sleep(100 * time.Millisecond)
 		if hasToken {
-			fmt.Println("node 2 has token")
-		
+			log.Println("node 2 has token")
+			if number%2 == 0 {
+				log.Println("node 2 wants to acces cs")
+				log.Println("node 2 is inside cs")
+				log.Println("node 2 leaves cs")
+			}
+
 			client.HandoverToken(context.Background(), client1token)
 			hasToken = false
 		} else {
-			//fmt.Println("node 2 does not have token")
+
+			log.Println("node 2 does not have token")
 			//waiting for token
 		}
-
-		//recieving token
-		//entering critical section
-		//leaving critcial section
-
+		number++
 	}
 }
